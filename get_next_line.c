@@ -134,6 +134,7 @@ int	ft_finalline(char **s, char **line)
 		aux = ft_strdup(&(*s)[i + 1]);
 		free(*s);
 		*s = aux;
+		printf("--S--%s\n", *s);
 		if ((*s)[0] == 0)
 		{
 			free(*s);
@@ -155,15 +156,15 @@ int get_next_line(int fd, char **line)
 	static char	*s[4096];
 	char		buffer[BUFFER_SIZE + 1];
 	char		*aux;
-	int 		flag;
+	int		resread;
 
 	if (fd < 0 || BUFFER_SIZE < 1)
 		return (-1);
-	flag = 0;
-	while ((read(fd, buffer, BUFFER_SIZE)) > 0)
+	resread = 1;
+	while (resread > 0)
 	{
-		flag++;
-		buffer[BUFFER_SIZE] = '\0';
+		resread = read(fd, buffer, BUFFER_SIZE);
+		buffer[resread] = '\0';
 		if (!s[fd])
 			s[fd] = ft_strdup(buffer);
 		else
@@ -175,5 +176,7 @@ int get_next_line(int fd, char **line)
 		if (ft_strchr(s[fd], '\n') != 0)
 			break;
 	}
+	if (!s[fd] && resread == 0)
+		return (0);
 	return (ft_finalline(&s[fd], line));
 }
