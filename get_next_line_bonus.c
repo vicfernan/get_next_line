@@ -6,11 +6,11 @@
 /*   By: vifernan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/28 12:17:29 by vifernan          #+#    #+#             */
-/*   Updated: 2021/05/10 19:55:56 by vifernan         ###   ########.fr       */
+/*   Updated: 2021/05/10 17:48:02 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 char	*freestatic(char **s)
 {
@@ -40,12 +40,7 @@ int	ft_finalline(char **s, char **line)
 	i = 0;
 	while ((*s)[i] != '\n' && (*s)[i] != '\0')
 		i++;
-	if ((*s)[i] == '\0')
-	{
-		*line = ft_strdup(*s);
-		*s = freestatic(&(*s));
-	}
-	else if ((*s)[i] == '\n')
+	if ((*s)[i] == '\n')
 	{
 		*line = ft_substr(*s, 0, i);
 		aux = ft_strdup(&(*s)[i + 1]);
@@ -54,6 +49,11 @@ int	ft_finalline(char **s, char **line)
 		if ((*s)[0] == 0)
 			*s = freestatic(&(*s));
 		return (1);
+	}
+	else
+	{
+		*line = ft_strdup(*s);
+		*s = freestatic(&(*s));
 	}
 	return (0);
 }
