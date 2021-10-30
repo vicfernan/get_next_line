@@ -1,6 +1,6 @@
-### get_next_line
+# get_next_line
 
-# Description
+### Description
 
 Its a very usefull function that allows you to get each line of a file text until the '\n' and save it in a char **line.
 
